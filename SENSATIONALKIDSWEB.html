@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sensational Kids – Mixing Education With Fun</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* KEY FIX: prevent horizontal overflow on ALL elements */
+    body {
+      font-family:'Poppins',sans-serif;
+      background:#f5f8ff;
+      overflow-x:hidden;
+      color:#111;
+      width:100%;
+      max-width:100%;
+    }
+
+    a { text-decoration:none; color:inherit; }
+    ul { list-style:none; }
+    img { display:block; max-width:100%; }
+
+    /* ── NAVBAR ── */
+    nav {
+      width:100%; padding:10px 6%;
+      display:flex; justify-content:space-between; align-items:center;
+      position:fixed; top:0; left:0; z-index:1000;
+      background:rgba(0,0,0,0.25); backdrop-filter:blur(12px);
+    }
+    .logo img { height:70px; width:auto; object-fit:contain; }
+    .nav-links { display:flex; gap:28px; align-items:center; }
+    .nav-links a { color:#fff; font-weight:500; font-size:0.95rem; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:#ffe100; }
+    .book-btn {
+      background:#ff2f92; color:#fff !important;
+      padding:10px 22px; border-radius:30px; font-weight:600; font-size:0.9rem;
+      white-space:nowrap; transition:background 0.2s,transform 0.2s;
+    }
+    .book-btn:hover { background:#e0007a; transform:translateY(-2px); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:24px; height:3px; background:#fff; border-radius:3px; }
+    .mobile-menu {
+      display:none; flex-direction:column;
+      background:#07153b; position:fixed; top:0; left:0;
+      width:100%; height:100vh; z-index:999;
+      justify-content:center; align-items:center; gap:30px;
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:#fff; font-size:1.4rem; font-weight:600; }
+    .mobile-menu .close-btn {
+      position:absolute; top:20px; right:24px;
+      font-size:2rem; color:#fff; cursor:pointer; background:none; border:none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      width:100%;
+      min-height:100vh;
+      background:linear-gradient(135deg,#007bff 0%,#00b7ff 100%);
+      padding:130px 6% 100px;
+      display:flex; justify-content:space-between; align-items:center; gap:40px;
+      position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; width:320px; height:320px;
+      background:#ff2f92; border-radius:50%; top:-120px; right:-80px; opacity:0.35;
+      /* Prevent pseudo-elements from causing overflow */
+      pointer-events:none;
+    }
+    .hero::after {
+      content:''; position:absolute; width:260px; height:260px;
+      background:#ffe100; border-radius:50%; bottom:-80px; left:-80px; opacity:0.35;
+      pointer-events:none;
+    }
+    .hero-deco {
+      position:absolute; font-size:1.6rem;
+      animation:floatDeco 3.5s ease-in-out infinite; pointer-events:none;
+    }
+    .hd1{top:18%;left:46%;animation-delay:0s;}
+    .hd2{top:70%;left:44%;animation-delay:.8s;}
+    .hd3{top:22%;right:5%;animation-delay:1.5s;}
+    .hd4{bottom:18%;right:6%;animation-delay:2.2s;}
+    @keyframes floatDeco{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+    .hero-text { width:48%; color:#fff; z-index:2; }
+    .hero-text h2 { font-size:clamp(2.4rem,4.5vw,4rem); font-weight:800; line-height:1.15; margin-bottom:20px; }
+    .hero-text h2 .yellow{color:#ffe100;} .hero-text h2 .pink{color:#ff2f92;}
+    .hero-text p { font-size:1.05rem; line-height:1.8; margin-bottom:35px; opacity:.92; max-width:480px; }
+    .hero-buttons { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+    .explore-btn {
+      background:#ff2f92; color:#fff; padding:14px 32px; border-radius:40px;
+      font-weight:700; font-size:.95rem; display:flex; align-items:center; gap:8px;
+      transition:background .2s,transform .2s;
+    }
+    .explore-btn:hover{background:#e0007a;transform:translateY(-2px);}
+    .watch-btn { color:#fff; font-weight:600; display:flex; align-items:center; gap:10px; font-size:.95rem; }
+    .play-icon {
+      width:42px;height:42px; border-radius:50%;
+      background:rgba(255,255,255,.25); display:flex;align-items:center;justify-content:center;
+      font-size:.9rem;
+    }
+
+    .hero-gallery { width:46%; position:relative; height:520px; z-index:2; }
+    .card {
+      position:absolute; border-radius:28px; overflow:hidden;
+      box-shadow:0 15px 40px rgba(0,0,0,.25); background:#fff; padding:10px;
+    }
+    .card img { width:100%;height:100%;object-fit:cover;border-radius:20px; }
+    .card1{width:220px;height:300px;left:0;top:110px;animation:floatCard1 4.5s ease-in-out infinite;}
+    .card2{width:280px;height:380px;left:140px;top:30px;z-index:3;animation:floatCard 4s ease-in-out infinite .5s;}
+    .card3{width:200px;height:280px;right:0;top:130px;animation:floatCard3 5s ease-in-out infinite 1s;}
+    @keyframes floatCard1{0%,100%{transform:translateY(0) rotate(-8deg);}50%{transform:translateY(-18px) rotate(-8deg);}}
+    @keyframes floatCard {0%,100%{transform:translateY(0);}50%{transform:translateY(-18px);}}
+    @keyframes floatCard3{0%,100%{transform:translateY(0) rotate(8deg);}50%{transform:translateY(-18px) rotate(8deg);}}
+
+    /* ── FEATURES ── */
+    .features-wrap { padding:0 5%; width:100%; }
+    .features {
+      background:#fff; border-radius:28px; padding:40px 30px;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+      position:relative; z-index:10; margin-top:-60px;
+      box-shadow:0 12px 40px rgba(0,0,0,.1);
+    }
+    .feature-box { text-align:center; padding:10px; }
+    .feature-icon {
+      width:60px;height:60px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.6rem; margin:0 auto 14px;
+    }
+    .fi-blue{background:#e8f4ff;} .fi-green{background:#e8fff0;}
+    .fi-yellow{background:#fffbe6;} .fi-pink{background:#fff0f7;}
+    .feature-box h3{font-size:1rem;font-weight:700;color:#0a1b4d;margin-bottom:8px;}
+    .feature-box p{font-size:.88rem;color:#666;line-height:1.7;}
+
+    /* ── ABOUT ── */
+    .about {
+      width:100%;
+      padding:90px 6%; display:flex;
+      justify-content:space-between; align-items:flex-start; gap:50px;
+    }
+    .about-text{width:46%;}
+    .about-text h5{color:#ff2f92;font-size:.85rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+    .about-text h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:#0a1b4d;line-height:1.25;margin-bottom:20px;}
+    .about-text p{color:#555;line-height:1.9;margin-bottom:16px;font-size:.97rem;}
+    .about-text .highlight{color:#ff2f92;font-weight:600;}
+    .about-right{width:50%;}
+    .dest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+    .dest-card {
+      background:#fff;border-radius:22px;padding:0 0 18px;text-align:center;
+      box-shadow:0 6px 24px rgba(0,0,0,.08);overflow:hidden;
+      transition:transform .3s,box-shadow .3s;
+    }
+    .dest-card:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(0,0,0,.14);}
+    .dest-card .dest-img{width:100%;height:110px;object-fit:cover;}
+    .dest-icon-wrap {
+      width:46px;height:46px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+      margin:-23px auto 12px;position:relative;z-index:2;
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+    .di-blue{background:#007bff;} .di-green{background:#28b463;}
+    .di-orange{background:#ff8c00;} .di-purple{background:#8e44ad;}
+    .dest-card h4{font-size:.95rem;font-weight:700;color:#0a1b4d;margin-bottom:6px;padding:0 12px;}
+    .dest-card p{font-size:.82rem;color:#777;line-height:1.6;padding:0 12px;}
+
+    /* ── GALLERY ── */
+    .gallery{width:100%;padding:80px 6%;background:#fff;}
+    .section-header{text-align:center;margin-bottom:50px;}
+    .section-header h5{color:#ff2f92;font-size:.85rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+    .section-header h2{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:#0a1b4d;}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+    .gallery-grid img {
+      width:100%;height:260px;object-fit:cover;border-radius:22px;
+      transition:transform .35s,box-shadow .35s;cursor:pointer;background:#dde;
+    }
+    .gallery-grid img:hover{transform:scale(1.04);box-shadow:0 12px 32px rgba(0,0,0,.15);}
+
+    /* ── WHY US ── */
+    .why-us{width:100%;padding:90px 6%;background:#f5f8ff;}
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:10px;}
+    .why-card {
+      background:#fff;padding:28px 24px;border-radius:22px;
+      box-shadow:0 6px 24px rgba(0,0,0,.07);
+      display:flex;align-items:flex-start;gap:18px;
+      transition:transform .3s,box-shadow .3s;
+    }
+    .why-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,0,0,.13);}
+    .why-icon-wrap {
+      width:54px;height:54px;flex-shrink:0;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+    }
+    .wi-pink{background:#fff0f7;} .wi-green{background:#e8fff0;} .wi-yellow{background:#fffbe6;}
+    .wi-blue{background:#e8f4ff;} .wi-purple{background:#f5f0ff;} .wi-teal{background:#e6fff8;}
+    .why-content h3{font-size:1rem;font-weight:700;color:#0a1b4d;margin-bottom:8px;}
+    .why-content p{font-size:.88rem;color:#666;line-height:1.75;}
+
+    /* ── CONTACT STRIP ── */
+    .contact-strip {
+      width:100%;
+      background:#ffcc00;padding:60px 6%;
+      display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;
+      position:relative;overflow:hidden;
+    }
+    .contact-strip::before {
+      content:'';position:absolute;width:300px;height:300px;
+      background:rgba(255,255,255,.25);border-radius:50%;top:-120px;left:-80px;
+      pointer-events:none;
+    }
+    .contact-left{z-index:2;}
+    .contact-left h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:#0a1b4d;margin-bottom:8px;}
+    .contact-left p{color:#333;font-size:1rem;}
+    .contact-middle{display:flex;flex-direction:column;gap:14px;z-index:2;}
+    .contact-btn {
+      background:#0a1b4d;color:#fff;padding:14px 32px;border-radius:40px;
+      font-weight:700;font-size:1rem;display:flex;align-items:center;gap:10px;
+      transition:background .2s,transform .2s;
+    }
+    .contact-btn:hover{background:#007bff;transform:translateY(-2px);}
+    .contact-right{display:flex;flex-direction:column;gap:14px;z-index:2;}
+    .phone-box {
+      display:flex;align-items:center;gap:14px;background:#fff;
+      padding:12px 20px;border-radius:50px;box-shadow:0 4px 16px rgba(0,0,0,.1);
+    }
+    .phone-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .pi-green{background:#28b463;color:#fff;} .pi-teal{background:#00c896;color:#fff;}
+    .phone-box div h4{font-size:.75rem;color:#888;font-weight:500;margin-bottom:2px;}
+    .phone-box div p{font-size:.95rem;font-weight:700;color:#0a1b4d;line-height:1.5;}
+
+    /* ── FOOTER ── */
+    footer{width:100%;background:#07153b;color:#fff;padding:60px 6% 30px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.6fr;gap:40px;margin-bottom:50px;}
+    .footer-brand img{height:80px;margin-bottom:14px;}
+    .footer-brand p{color:#aab;font-size:.9rem;line-height:1.8;}
+    .footer-col h4{font-size:.95rem;font-weight:700;margin-bottom:18px;color:#fff;}
+    .footer-col ul{display:flex;flex-direction:column;gap:10px;}
+    .footer-col ul li a{color:#aab;font-size:.9rem;transition:color .2s;}
+    .footer-col ul li a:hover{color:#ffe100;}
+    .social-row{display:flex;gap:12px;margin-top:4px;}
+    .soc-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:transform .2s;}
+    .soc-icon:hover{transform:scale(1.15);}
+    .soc-fb{background:#1877f2;color:#fff;font-weight:700;font-family:serif;}
+    .soc-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;}
+    .soc-wa{background:#25d366;color:#fff;}
+    .soc-tt{background:#000;color:#fff;}
+    .newsletter-row{display:flex;gap:0;margin-top:14px;}
+    .newsletter-row input{flex:1;padding:12px 16px;border:none;border-radius:30px 0 0 30px;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;}
+    .newsletter-row button{background:#ff2f92;color:#fff;border:none;padding:12px 20px;border-radius:0 30px 30px 0;font-weight:700;font-size:.88rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:background .2s;}
+    .newsletter-row button:hover{background:#e0007a;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+    .footer-bottom p{color:#778;font-size:.85rem;}
+    .footer-bottom .tagline{color:#aab;font-size:.85rem;}
+    .footer-bottom .tagline span{color:#ff2f92;}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1100px){
+      .why-grid{grid-template-columns:repeat(2,1fr);}
+      .footer-grid{grid-template-columns:1fr 1fr;}
+    }
+
+    /* ── TABLET / MOBILE: 900px and below ── */
+    @media(max-width:900px){
+      /* Hero: stack vertically, full width */
+      .hero {
+        flex-direction:column;
+        text-align:center;
+        padding:100px 5% 60px;
+        width:100%;
+        min-height:auto;
+      }
+      .hero-text {
+        width:100%;
+        max-width:100%;
+      }
+      .hero-text p {
+        max-width:100%;
+        margin-left:auto;
+        margin-right:auto;
+      }
+      .hero-buttons { justify-content:center; }
+
+      /* Hero gallery: contained, no overflow */
+      .hero-gallery {
+        width:100%;
+        max-width:400px;
+        height:320px;
+        margin:0 auto;
+        position:relative;
+      }
+      /* Recalculate card positions for contained gallery */
+      .card1 {
+        width:130px; height:190px;
+        left:0; top:70px;
+        animation:floatCard1 4.5s ease-in-out infinite;
+      }
+      .card2 {
+        width:170px; height:260px;
+        left:50%; top:20px;
+        transform:translateX(-50%);
+        animation:floatCard2Mobile 4s ease-in-out infinite .5s;
+        z-index:3;
+      }
+      .card3 {
+        width:130px; height:190px;
+        right:0; top:70px;
+        animation:floatCard3 5s ease-in-out infinite 1s;
+      }
+      @keyframes floatCard2Mobile {
+        0%,100%{transform:translateX(-50%) translateY(0);}
+        50%{transform:translateX(-50%) translateY(-14px);}
+      }
+
+      /* Features: 2 columns */
+      .features { grid-template-columns:repeat(2,1fr); }
+      .features-wrap { padding:0 4%; width:100%; }
+
+      /* About: stack */
+      .about { flex-direction:column; padding:60px 5%; }
+      .about-text,.about-right { width:100%; }
+
+      /* Gallery: 2 cols */
+      .gallery-grid { grid-template-columns:repeat(2,1fr); }
+
+      /* Nav */
+      .nav-links { display:none; }
+      .book-btn { display:none; }
+      .hamburger { display:flex; }
+
+      /* Why us: 2 cols */
+      .why-grid { grid-template-columns:repeat(2,1fr); }
+
+      /* Contact */
+      .contact-strip {
+        flex-direction:column;
+        align-items:flex-start;
+        width:100%;
+        padding:50px 5%;
+      }
+      .contact-left, .contact-middle, .contact-right {
+        width:100%;
+      }
+      .contact-right { width:100%; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+
+    /* ── SMALL MOBILE: 600px and below ── */
+    @media(max-width:600px){
+      /* Hero */
+      .hero {
+        padding:90px 5% 50px;
+      }
+      .hero-gallery {
+        width:100%;
+        max-width:340px;
+        height:260px;
+      }
+      .card1 { width:100px; height:155px; left:0; top:55px; }
+      .card2 { width:145px; height:220px; left:50%; top:15px; transform:translateX(-50%); }
+      .card3 { width:100px; height:155px; right:0; top:55px; }
+
+      /* Features: 1 col */
+      .features {
+        grid-template-columns:1fr;
+        margin-top:-30px;
+        padding:30px 20px;
+      }
+      .features-wrap { padding:0 4%; }
+
+      /* Destinations */
+      .dest-grid { grid-template-columns:repeat(2,1fr); }
+
+      /* Gallery: 1 col */
+      .gallery { padding:60px 5%; }
+      .gallery-grid { grid-template-columns:1fr; gap:16px; }
+      .gallery-grid img { height:220px; }
+
+      /* Why us: 1 col */
+      .why-us { padding:60px 5%; }
+      .why-grid { grid-template-columns:1fr; }
+
+      /* Contact */
+      .contact-strip {
+        flex-direction:column;
+        align-items:stretch;
+        padding:40px 5%;
+        gap:24px;
+      }
+      .phone-box { flex-wrap:wrap; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns:1fr; gap:30px; }
+      footer { padding:50px 5% 24px; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+
+      /* About */
+      .about { padding:50px 5%; }
+    }
+
+    /* ── VERY SMALL: 380px and below ── */
+    @media(max-width:380px){
+      .hero-gallery {
+        height:220px;
+        max-width:290px;
+      }
+      .card1 { width:85px; height:130px; top:45px; }
+      .card2 { width:120px; height:185px; }
+      .card3 { width:85px; height:130px; top:45px; }
+
+      .hero-text h2 { font-size:1.9rem; }
+      .explore-btn { padding:12px 22px; font-size:.88rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">
+      <a href="#"><img src=" " alt="Sensational Kids Logo"></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+    <a href="#contact" class="book-btn">📅 Book an Excursion</a>
+    <div class="hamburger" onclick="openMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" onclick="closeMenu()">✕</button>
+    <a href="#" onclick="closeMenu()">Home</a>
+    <a href="#about" onclick="closeMenu()">About Us</a>
+    <a href="#gallery" onclick="closeMenu()">Gallery</a>
+    <a href="#why" onclick="closeMenu()">Why Us</a>
+    <a href="#contact" onclick="closeMenu()">Contact Us</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-deco hd1">⭐</div>
+    <div class="hero-deco hd2">✨</div>
+    <div class="hero-deco hd3">🌟</div>
+    <div class="hero-deco hd4">✦</div>
+
+    <div class="hero-text">
+      <h2>Exploring.<br><span class="yellow">Learning.</span><br><span class="pink">Having Fun!</span></h2>
+      <p>Exciting educational excursions that inspire young minds and create unforgettable memories.</p>
+      <div class="hero-buttons">
+        <a href="#gallery" class="explore-btn">Explore Excursions →</a>
+        <a href="#about" class="watch-btn">
+          <span class="play-icon">▶</span> Educational &amp; Fun
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-gallery">
+      <div class="card card1"><img src="images/excursion1.jpg" alt="Excursion"></div>
+      <div class="card card2"><img src="images/excursion2.jpg" alt="Kids Learning"></div>
+      <div class="card card3"><img src="images/excursion3.jpg" alt="Fun Activity"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="features-wrap">
+    <section class="features">
+      <div class="feature-box">
+        <div class="feature-icon fi-blue">📚</div>
+        <h3>Educational</h3>
+        <p>Every excursion is designed to improve learning outside the classroom.</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon fi-green">😄</div>
+        <h3>Fun Activities</h3>
+        <p>We create exciting and memorable experiences for children.</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon fi-yellow">🛡️</div>
+        <h3>Safety First</h3>
+        <p>Your children's comfort and safety remain our top priority.</p>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon fi-pink">🏅</div>
+        <h3>Experienced Team</h3>
+        <p>Years of experience organizing successful school excursions.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-text">
+      <h5>About Us</h5>
+      <h2>Private. Purposeful. Unforgettable.</h2>
+      <p>Sensational Kids is a private organization that takes school students on educational and recreational excursions to exciting and inspiring destinations. For many years, we have been committed to mixing education with fun by creating hands-on experiences that spark curiosity, build confidence, and leave lasting memories.</p>
+      <p>From museums and parks to airports and beyond, we carefully plan every trip to ensure it is safe, fun-filled, and truly enriching for every child.</p>
+      <p class="highlight">We don't just take trips. We create experiences that shape young lives.</p>
+    </div>
+    <div class="about-right">
+      <div class="dest-grid">
+        <div class="dest-card">
+          <img class="dest-img" src="images/museum.jpg" alt="Museums">
+          <div class="dest-icon-wrap di-blue">🏛️</div>
+          <h4>Museums</h4>
+          <p>Discover history, culture and knowledge up close.</p>
+        </div>
+        <div class="dest-card">
+          <img class="dest-img" src="images/parks.jpg" alt="Parks">
+          <div class="dest-icon-wrap di-green">🌿</div>
+          <h4>Parks</h4>
+          <p>Enjoy nature, fresh air and fun activities.</p>
+        </div>
+        <div class="dest-card">
+          <img class="dest-img" src="images/airport.jpg" alt="Airports">
+          <div class="dest-icon-wrap di-orange">✈️</div>
+          <h4>Airports</h4>
+          <p>Explore the world of aviation and how things take off!</p>
+        </div>
+        <div class="dest-card">
+          <img class="dest-img" src="images/more.jpg" alt="And More">
+          <div class="dest-icon-wrap di-purple" style="font-size:.9rem;color:#fff;">•••</div>
+          <h4>And More</h4>
+          <p>Many more exciting destinations to inspire young minds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="section-header">
+      <h2>Our Gallery</h2>
+    </div>
+    <div class="gallery-grid">
+      <img src="images/gallery1.jpg" alt="Gallery 1">
+      <img src="images/gallery2.jpg" alt="Gallery 2">
+      <img src="images/gallery3.jpg" alt="Gallery 3">
+      <img src="images/gallery4.jpg" alt="Gallery 4">
+      <img src="images/gallery5.jpg" alt="Gallery 5">
+      <img src="images/gallery6.jpg" alt="Gallery 6">
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-us" id="why">
+    <div class="section-header">
+      <h5>Why Choose Us</h5>
+      <h2>The Sensational Difference</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon-wrap wi-pink">❤️</div>
+        <div class="why-content">
+          <h3>Child-Centred Approach</h3>
+          <p>Every excursion is designed with the child's enjoyment and development at heart.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap wi-green">✅</div>
+        <div class="why-content">
+          <h3>Curriculum Aligned</h3>
+          <p>Our trips complement school curricula and reinforce classroom learning.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap wi-yellow">⭐</div>
+        <div class="why-content">
+          <h3>Trusted by Schools</h3>
+          <p>Hundreds of schools trust us to deliver safe and enriching excursions.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap wi-blue">🚌</div>
+        <div class="why-content">
+          <h3>Full Logistics Support</h3>
+          <p>We handle all transport, planning, and arrangements so you don't have to.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap wi-purple">👨‍🏫</div>
+        <div class="why-content">
+          <h3>Expert Guides</h3>
+          <p>Our experienced team ensures every child gets the most out of every visit.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap wi-teal">📋</div>
+        <div class="why-content">
+          <h3>Flexible Packages</h3>
+          <p>We offer tailored packages to meet your school's unique needs and budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT STRIP -->
+  <section class="contact-strip" id="contact">
+    <div class="contact-left">
+      <h2>Ready to Book an Excursion?</h2>
+      <p>Get in touch with us today and let's plan something sensational!</p>
+    </div>
+    <div class="contact-middle">
+      <a href="mailto:info@sensationalkids.com" class="contact-btn">📧 Email Us</a>
+      <a href="#" class="contact-btn">📅 Book Now</a>
+    </div>
+    <div class="contact-right">
+      <div class="phone-box">
+        <div class="phone-icon pi-green">📞</div>
+        <div>
+          <h4>Call Us</h4>
+          <p>+2348039054916</p>
+        </div>
+      </div>
+      <div class="phone-box">
+        <div class="phone-icon pi-teal">💬</div>
+        <div>
+          <h4>WhatsApp</h4>
+          <p>+2348029054916</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand footer-col">
+        <img src="logo.png" alt="Sensational Kids">
+        <p>Mixing education with fun — creating experiences that shape young lives across South Africa.</p>
+        <div class="social-row" style="margin-top:18px;">
+          <a href="#" class="soc-icon soc-fb">f</a>
+          <a href="#" class="soc-icon soc-ig">📷</a>
+          <a href="#" class="soc-icon soc-wa">💬</a>
+          <a href="#" class="soc-icon soc-tt">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="#">Museums</a></li>
+          <li><a href="#">Parks</a></li>
+          <li><a href="#">Airports</a></li>
+          <li><a href="#">Science Centres</a></li>
+          <li><a href="#">And More</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Sensational Kids. All rights reserved.</p>
+      <p class="tagline">Mixing Education With <span>Fun</span> ✨</p>
+    </div>
+  </footer>
+
+  <script>
+    function openMenu(){ document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+  </script>
+
+</body>
+</html>
