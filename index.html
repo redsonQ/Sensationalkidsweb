@@ -179,6 +179,94 @@
     }
     .gallery-grid img:hover{transform:scale(1.04);box-shadow:0 12px 32px rgba(0,0,0,.15);}
 
+    /* ── DESTINATIONS SECTION HEADER ── */
+    .dest-section-header { margin-bottom: 18px; }
+    .dest-section-title {
+      font-size: 1.15rem; font-weight: 800; color: #0a1b4d;
+      text-transform: uppercase; letter-spacing: 2px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .dest-section-title::before {
+      content: ''; display: inline-block; width: 28px; height: 4px;
+      background: linear-gradient(90deg,#ff2f92,#007bff); border-radius: 4px;
+    }
+    .dest-section-title::after {
+      content: ''; display: inline-block; width: 28px; height: 4px;
+      background: linear-gradient(90deg,#007bff,#ff2f92); border-radius: 4px;
+    }
+
+    /* ── PORTRAIT VIDEO PLAYER ── */
+    .video-player-wrap { display:flex; justify-content:center; margin-bottom:52px; }
+    .video-player-card {
+      position:relative; width:320px;
+      background:linear-gradient(155deg,#07153b 0%,#0a2a6e 60%,#001e5a 100%);
+      border-radius:32px; padding:20px;
+      box-shadow:0 20px 60px rgba(0,123,255,.3),0 0 0 1px rgba(255,255,255,.08);
+      overflow:visible;
+    }
+    .video-glow {
+      position:absolute; inset:-2px; border-radius:34px;
+      background:linear-gradient(135deg,#ff2f92,#007bff,#ffe100,#ff2f92);
+      background-size:300% 300%;
+      animation:glowRotate 4s linear infinite;
+      z-index:-1; filter:blur(8px); opacity:.7;
+    }
+    @keyframes glowRotate {
+      0%  { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+    .video-badge {
+      display:inline-block;
+      background:linear-gradient(90deg,#ff2f92,#ff6db5);
+      color:#fff; font-size:.72rem; font-weight:700; letter-spacing:1.5px;
+      padding:5px 14px; border-radius:20px; margin-bottom:14px; text-transform:uppercase;
+    }
+    .video-container {
+      position:relative; width:100%; aspect-ratio:9/16;
+      border-radius:20px; overflow:hidden; background:#000;
+    }
+    .video-container video { width:100%; height:100%; object-fit:cover; display:block; }
+    .video-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top,rgba(7,21,59,.7) 0%,rgba(0,0,0,.15) 60%,transparent 100%);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; transition:background .3s;
+    }
+    .video-overlay:hover {
+      background:linear-gradient(to top,rgba(7,21,59,.5) 0%,rgba(0,0,0,.1) 60%,transparent 100%);
+    }
+    .video-play-btn {
+      width:70px; height:70px; border-radius:50%; border:none;
+      background:linear-gradient(135deg,#ff2f92,#ff6db5);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      box-shadow:0 8px 30px rgba(255,47,146,.55),0 0 0 12px rgba(255,47,146,.15);
+      animation:pulseBtnGlow 2s ease-in-out infinite; transition:transform .2s;
+    }
+    .video-play-btn:hover { transform:scale(1.1); }
+    @keyframes pulseBtnGlow {
+      0%,100%{ box-shadow:0 8px 30px rgba(255,47,146,.55),0 0 0 12px rgba(255,47,146,.15); }
+      50%    { box-shadow:0 8px 30px rgba(255,47,146,.8), 0 0 0 22px rgba(255,47,146,.05); }
+    }
+    .play-triangle { font-size:1.4rem; color:#fff; margin-left:4px; }
+    .video-hint { color:rgba(255,255,255,.7); font-size:.78rem; margin-top:12px; font-weight:500; }
+    .video-controls {
+      position:absolute; bottom:0; left:0; right:0; padding:10px 14px;
+      background:linear-gradient(to top,rgba(7,21,59,.9) 0%,transparent 100%);
+      display:flex; align-items:center; gap:10px;
+    }
+    .vc-btn { background:none; border:none; color:#fff; font-size:1.1rem; cursor:pointer; flex-shrink:0; padding:0; line-height:1; }
+    .vc-progress { flex:1; height:4px; background:rgba(255,255,255,.25); border-radius:4px; cursor:pointer; position:relative; }
+    .vc-bar { height:100%; width:0%; background:linear-gradient(90deg,#ff2f92,#ffe100); border-radius:4px; transition:width .1s linear; }
+    .video-info { padding:16px 4px 4px; }
+    .video-info h4 { color:#fff; font-size:1rem; font-weight:700; margin-bottom:6px; }
+    .video-info p { color:rgba(255,255,255,.6); font-size:.82rem; line-height:1.6; }
+
+    /* Extra phone icon colours */
+    .pi-blue { background:#007bff; color:#fff; }
+    .pi-pink { background:#ff2f92; color:#fff; }
+
     /* ── WHY US ── */
     .why-us{width:100%;padding:90px 6%;background:#f5f8ff;}
     .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:10px;}
@@ -378,6 +466,8 @@
       .gallery { padding:60px 5%; }
       .gallery-grid { grid-template-columns:1fr; gap:16px; }
       .gallery-grid img { height:220px; }
+      /* Video player mobile */
+      .video-player-card { width:90%; max-width:300px; }
 
       /* Why us: 1 col */
       .why-us { padding:60px 5%; }
@@ -506,6 +596,9 @@
       <p class="highlight">We don't just take trips. We create experiences that shape young lives.</p>
     </div>
     <div class="about-right">
+      <div class="dest-section-header">
+        <h3 class="dest-section-title">Our Destinations</h3>
+      </div>
       <div class="dest-grid">
         <div class="dest-card">
           <img class="dest-img" src="museum.jpeg" alt="Museums">
@@ -539,9 +632,42 @@
   <section class="gallery" id="gallery">
     <div class="section-header">
       <h2>Our Gallery</h2>
-
-      
     </div>
+
+    <!-- PORTRAIT VIDEO PLAYER -->
+    <div class="video-player-wrap">
+      <div class="video-player-card">
+        <div class="video-glow"></div>
+        <div class="video-badge">▶ Watch Our Story</div>
+        <div class="video-container">
+          <video
+            id="galleryVideo"
+            src=""
+            poster="IMG-20260514-WA0010.jpg"
+            playsinline
+            loop
+          ></video>
+          <div class="video-overlay" id="videoOverlay">
+            <button class="video-play-btn" onclick="playVideo()" aria-label="Play video">
+              <span class="play-triangle">▶</span>
+            </button>
+            <p class="video-hint">Tap to watch</p>
+          </div>
+          <div class="video-controls" id="videoControls" style="display:none;">
+            <button class="vc-btn" onclick="togglePlay()" id="playPauseBtn">⏸</button>
+            <div class="vc-progress" onclick="seekVideo(event)">
+              <div class="vc-bar" id="vcBar"></div>
+            </div>
+            <button class="vc-btn" onclick="toggleMute()" id="muteBtn">🔊</button>
+          </div>
+        </div>
+        <div class="video-info">
+          <h4>See the Fun in Action</h4>
+          <p>Watch how Sensational Kids brings learning to life on every excursion.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="gallery-grid">
       <img src="IMG-20260514-WA0010.jpg" alt="Gallery 1">
       <img src="IMG-20260514-WA0012.jpg" alt="Gallery 2">
@@ -629,6 +755,20 @@
           <p>+2348029054916</p>
         </div>
       </div>
+      <div class="phone-box">
+        <div class="phone-icon pi-blue">📞</div>
+        <div>
+          <h4>Call Us</h4>
+          <p>+2348029054917</p>
+        </div>
+      </div>
+      <div class="phone-box">
+        <div class="phone-icon pi-pink">💬</div>
+        <div>
+          <h4>WhatsApp</h4>
+          <p>+2348029054918</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -675,6 +815,42 @@
   <script>
     function openMenu(){ document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
     function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+
+    /* VIDEO PLAYER */
+    var vid = document.getElementById('galleryVideo');
+    var overlay = document.getElementById('videoOverlay');
+    var controls = document.getElementById('videoControls');
+    var playPauseBtn = document.getElementById('playPauseBtn');
+    var vcBar = document.getElementById('vcBar');
+
+    function playVideo() {
+      vid.play();
+      overlay.style.display = 'none';
+      controls.style.display = 'flex';
+    }
+    function togglePlay() {
+      if (vid.paused) { vid.play(); playPauseBtn.textContent = '\u23F8'; }
+      else            { vid.pause(); playPauseBtn.textContent = '\u25B6'; }
+    }
+    function toggleMute() {
+      vid.muted = !vid.muted;
+      document.getElementById('muteBtn').textContent = vid.muted ? '\uD83D\uDD07' : '\uD83D\uDD0A';
+    }
+    function seekVideo(e) {
+      var rect = e.currentTarget.getBoundingClientRect();
+      var pct  = (e.clientX - rect.left) / rect.width;
+      vid.currentTime = pct * vid.duration;
+    }
+    if (vid) {
+      vid.addEventListener('timeupdate', function(){
+        if (vid.duration) vcBar.style.width = (vid.currentTime / vid.duration * 100) + '%';
+      });
+      vid.addEventListener('ended', function(){
+        overlay.style.display = 'flex';
+        controls.style.display = 'none';
+        vcBar.style.width = '0%';
+      });
+    }
   </script>
 
 </body>
